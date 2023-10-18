@@ -1,5 +1,10 @@
 {
   "tasks": {
-    "dev": "deno run --watch main.ts"
+    "start": "deno run --unstable -A --watch main.ts"
+  },
+  "imports": {
+    "$std/": "https://deno.land/std@0.204.0/",
+    "$utils": "../utils/index.ts",
+    "oak": "https://deno.land/x/oak@v12.6.1/mod.ts"
   }
 }

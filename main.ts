@@ -1,8 +1,24 @@
-export function add(a: number, b: number): number {
-  return a + b;
-}
+import "$std/dotenv/load.ts";
+import { Application, Router } from "oak";
 
-// Learn more at https://deno.land/manual/examples/module_metadata#concepts
-if (import.meta.main) {
-  console.log("Add 2 + 3 =", add(2, 3));
-}
+const authRouter = new Router()
+  .get("/sign-in", (ctx) => {
+    ctx.response.body = "sign-in";
+  })
+  .get("/sign-up", (ctx) => {
+    ctx.response.body = "sign-up";
+  });
+
+const port = +(Deno.env.get("PORT") || 3000);
+
+console.info(`%c\nhttp://localhost:${port}`, "color: green");
+
+await new Application()
+  .use(
+    new Router()
+      .use("/auth", authRouter.routes(), authRouter.allowedMethods())
+      .routes(),
+  )
+  .listen({
+    port,
+  });
